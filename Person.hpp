@@ -9,7 +9,8 @@ class Person{
         std::string last_name_;
         std::string school_;
         std::string field_;
+        int id_;
     public:
-        Person(std::string first_name, std::string last_name, std::string school, std::string field);
+        Person(std::string first_name, std::string last_name, std::string school, std::string field, int id);
 };
 #endif
