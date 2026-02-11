@@ -1,5 +1,6 @@
 #include <iostream>
 #include <string>
+#include <unordered_map>
 
 #ifndef PERSON_H
 #define PERSON_H
@@ -9,8 +10,11 @@ class Person{
         std::string last_name_;
         std::string school_;
         std::string field_;
-        int id_;
+        std::unordered_map<std::string, std::string> friends_;
     public:
-        Person(std::string first_name, std::string last_name, std::string school, std::string field, int id);
+        Person(std::string first_name, std::string last_name, std::string school, 
+            std::string field, std::unordered_map<std::string, std::string> friends);
+        
+        std::string getFirstName();
 };
 #endif

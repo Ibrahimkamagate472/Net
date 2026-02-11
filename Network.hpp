@@ -7,38 +7,69 @@
 #define NETWORK_H
 
 struct Entry{
-    Person Person;
-    std::vector<std::string> friends;
+    Person person;
+    std::unordered_map<std::string, std::string> friends;
 };
 
 class Network{
 
     private:
         int id_;
-        std::unordered_map<int ,Person> newtork_;
-        std::unordered_map<int ,Entry> people_;
-        std::vector<Entry> pending;
+        std::unordered_map<std::string ,Entry> network_;
+        std::string current_person_;
+
     public:
+    /**
+     * @brief this function checks in our network if a person is in it or not
+     * 
+     * @param const reference to a string of the persons first name 
+     * @param const reference to a string of the persons last name 
+     * 
+     * @return true or false if we were able find the person or not
+     */
+    bool lookUp(const std::string& first_name_, const std::string& last_name_);
+
+    /**
+     * @brief this function sets the currernt person we are using, if the exist 
+     * 
+     * @param const reference to a string of the persons first name 
+     * @param const reference to a string of the persons last name 
+     * 
+     */
+    void setCurrentPerson(const std::string& first_name_, const std::string& last_name_);
+
+    /**
+     * @brief this functions adds a friend to the current preson that we are using 
+     * 
+     * @param const reference to a string of the friend we are adding first name
+     * @param const reference to a string of the friend we are adding last name
+     * 
+     * @return true or false if we were able to add the friend
+     */
+    bool addFriend(const std::string& friend_first_name, const std::string& friend_last_name_);
+
+
+
+
+
+
+    
     /**
      * @brief functions adds a new people to out network
      * 
      */
-    bool addPerson(std::string first_name_, std::string last_name_, std::string school_, std::string field_){};
+    bool addPerson(std::string first_name_, std::string last_name_, std::string school_, std::string field_);
+
 
     /**
      * 
      */
-    bool addFriend(){};
+    bool recomendFriend();
 
     /**
      * 
      */
-    bool recomendFriend(){};
-
-    /**
-     * 
-     */
-    bool removeFriend(){};
+    bool removeFriend();
 
 
 };
