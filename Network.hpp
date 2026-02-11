@@ -49,6 +49,11 @@ class Network{
     bool addFriend(const std::string& friend_first_name, const std::string& friend_last_name_);
 
 
+    /**
+     * @brief this function list out all the friends for a current person
+     */
+    void listFriends();
+
 
 
 

@@ -60,7 +60,18 @@ bool Network::addFriend(const std::string& friend_first_name, const std::string&
 }
 
 
+/**
+ * @brief this function list out all the friends for a current person
+ */
+void Network::listFriends(){
+    auto person_ = network_.find(current_person_);
 
+    if(person_ != network_.end()){
+        for(const auto friend_ : person_->second.friends){
+            std::cout << friend_.first;
+        }
+    }
+}
 
 
 
