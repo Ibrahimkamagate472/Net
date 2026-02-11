@@ -12,6 +12,8 @@ class Person{
         std::string field_;
         std::unordered_map<std::string, std::string> friends_;
     public:
+        Person();
+        
         Person(std::string first_name, std::string last_name, std::string school, 
             std::string field, std::unordered_map<std::string, std::string> friends);
         

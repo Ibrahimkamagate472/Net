@@ -38,6 +38,8 @@ class Network{
      */
     void setCurrentPerson(const std::string& first_name_, const std::string& last_name_);
 
+    /* FRIENDS SECTION */
+    
     /**
      * @brief this functions adds a friend to the current preson that we are using 
      * 

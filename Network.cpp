@@ -37,6 +37,7 @@ void Network::setCurrentPerson(const std::string& first_name_,const std::string&
     //if they do they we set it to the current person that we want to minipluate
     current_person_ = first_name_ + " " + last_name_;
 }
+/* FRIENDS SECTION */
 
 /**
  * @brief this functions adds a friend to the current preson that we are using 
@@ -59,7 +60,6 @@ bool Network::addFriend(const std::string& friend_first_name, const std::string&
     return 0;
 }
 
-
 /**
  * @brief this function list out all the friends for a current person
  */
@@ -74,7 +74,7 @@ void Network::listFriends(){
 }
 
 
-
+/* BASIC FUNCTIONS */
 
 /**
  * @brief functions adds a new people to out network
@@ -82,9 +82,15 @@ void Network::listFriends(){
  */
 bool Network::addPerson(std::string first_name_, std::string last_name_, std::string school_, std::string field_){
     
-    Person person_ (first_name_, last_name_, school_, field_, {});
+    Person temp_person_ (first_name_, last_name_, school_, field_, {});
 
+    Entry person_;
+    person_.friends = {};
+    person_.person = temp_person_;
 
+    network_[first_name_] = person_;
+
+    
 
     return 1;
 }
