@@ -6,9 +6,10 @@
 #ifndef NETWORK2_H
 #define NETWORK2_H
 
-struct Entry{
+
+struct Entry {
     Person person;
-    std::unordered_map<std::string, std::string> friends;
+    std::unordered_map<std::string, Person*> friends;
 };
 
 class Network{
@@ -17,7 +18,9 @@ class Network{
         int id_;
         std::unordered_map<std::string ,Entry> network_;
         std::unordered_map<std::string, std::string> duplicate_;
-        std::string current_person_;
+        Person* current_person_;
+        Person* person_;
+        Person* friend_;
 
     public:
     /**
@@ -28,7 +31,7 @@ class Network{
      * 
      * @return true or false if we were able find the person or not
      */
-    Person* lookUp(Person& person_);
+    Person* lookUp(const std::string& first_name_, const std::string& last_name_);
 
     /**
      * @brief this function sets the currernt person we are using, if the exist 
@@ -37,7 +40,7 @@ class Network{
      * @param const reference to a string of the persons last name 
      * 
      */
-    void setCurrentPerson(const std::string& first_name_, const std::string& last_name_);
+    bool setCurrentPerson(const std::string& first_name_, const std::string& last_name_);
 
     /**
      * @brief this functions handles if there are duplicate 
