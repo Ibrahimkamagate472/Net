@@ -1,5 +1,6 @@
 #include "Network.hpp"
 
+
 /**
  * @brief this function checks in our network if a person is in it or not
  * 
@@ -8,17 +9,26 @@
  * 
  * @return true or false if we were able find the person or not
  */
-bool Network::lookUp(const std::string& first_name_, const std::string& last_name_){
-    setCurrentPerson(first_name_,last_name_);
-    auto look_up_ = network_.find(current_person_);
 
-    //checks to see if the person is in the network
-    if(look_up_ ==  network_.end()){
-        std::cout << "We are unable to find that person." << std::endl;
-        return 0;
+ Person* Network::lookUp(Person& person_){
+    auto look_up_ = network_.find(person_.getFullName());
+
+    if(look_up_  == network_.end()){
+        return nullptr;
     }
-    return 1;
-}
+    return &(look_up_->second.person);
+ }
+// bool Network::lookUp(const std::string& first_name_, const std::string& last_name_){
+//     auto look_up_ = network_.find(first_name_ + " " + last_name_);
+
+//     //checks to see if the person is in the network
+//     if(look_up_ ==  network_.end()){
+//         std::cout << "We are unable to find that person." << std::endl;
+//         return 0;
+//     }
+//     return 1;
+// }
+
 
 /**
  * @brief this function sets the currernt person we are using, if the exist 
@@ -28,15 +38,60 @@ bool Network::lookUp(const std::string& first_name_, const std::string& last_nam
  * 
  */
 void Network::setCurrentPerson(const std::string& first_name_,const std::string& last_name_){
-    
+    Person* temp;
     //checks if there person even exist in our network
-    if(!lookUp(first_name_, last_name_)){
+    if(!lookUp(*temp)){
         std::cout << "This person does not exist in out network." << std::endl;
         return;
     }
     //if they do they we set it to the current person that we want to minipluate
     current_person_ = first_name_ + " " + last_name_;
+    delete temp;
 }
+
+
+
+/**
+ * @brief this functions handles if there are duplicate 
+ */
+bool Network::duplicate(const std::string& indicator_){
+    auto person_ = network_.find(current_person_);
+
+    //means that will be a duplicate name 
+    if(person_ != network_.end() && indicator_ == "person"){
+
+    }
+    else if(person_ != network_.end() && indicator_ == "friend"){
+
+    }
+}
+
+
+
+void Network::duplicateHandler(const std::string& duplicateName){
+    for(auto person_ : network_){
+        if(person_.second.person.getFirstName() == duplicateName){
+
+        }
+    }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 /* FRIENDS SECTION */
 
 /**
@@ -73,6 +128,25 @@ void Network::listFriends(){
     }
 }
 
+/**
+ * @brief this function deletes a friend from a persons list 
+ * 
+ * @param const reference to a string of the person first name we want to remove
+ * @param const reference to a string of the person last name we want to remove
+ */
+void Network::removeFriend(const std::string& remove_first, const std::string& remove_last){
+    auto person_ = network_.find(current_person_);
+    //finds the friends 
+    std::string remove_full_name = remove_first + " " + remove_last;
+    auto friend_ = person_->second.friends.find(remove_full_name);
+    
+    //double check if they are in the friends list
+    if(friend_ != person_->second.friends.end()){
+        person_->second.friends.erase(remove_first);
+        std::cout << "We have removed " << remove_full_name << " from " 
+        << current_person_ << " friends list." << std::endl;
+    }
+}
 
 /* BASIC FUNCTIONS */
 
@@ -87,10 +161,15 @@ bool Network::addPerson(std::string first_name_, std::string last_name_, std::st
     Entry person_;
     person_.friends = {};
     person_.person = temp_person_;
-
-    network_[first_name_] = person_;
-
-    
+    network_.insert({first_name_ + " " +last_name_, person_});
 
     return 1;
+}
+
+
+
+
+
+bool Network::changePersonName(const std::string& new_first_name, const std::string& new_last_name){
+    
 }

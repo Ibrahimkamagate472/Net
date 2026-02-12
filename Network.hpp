@@ -16,6 +16,7 @@ class Network{
     private:
         int id_;
         std::unordered_map<std::string ,Entry> network_;
+        std::unordered_map<std::string, std::string> duplicate_;
         std::string current_person_;
 
     public:
@@ -27,7 +28,7 @@ class Network{
      * 
      * @return true or false if we were able find the person or not
      */
-    bool lookUp(const std::string& first_name_, const std::string& last_name_);
+    Person* lookUp(Person& person_);
 
     /**
      * @brief this function sets the currernt person we are using, if the exist 
@@ -38,8 +39,15 @@ class Network{
      */
     void setCurrentPerson(const std::string& first_name_, const std::string& last_name_);
 
+    /**
+     * @brief this functions handles if there are duplicate 
+     */
+    bool duplicate(const std::string& indicator_);
+
+    void duplicateHandler(const std::string& duplicateName);
+
     /* FRIENDS SECTION */
-    
+
     /**
      * @brief this functions adds a friend to the current preson that we are using 
      * 
@@ -56,6 +64,18 @@ class Network{
      */
     void listFriends();
 
+    /**
+     * @brief this function deletes a friend from a persons list 
+     * 
+     * @param const reference to a string of the person first name we want to remove
+     * @param const reference to a string of the person last name we want to remove
+     */
+    void removeFriend(const std::string& remove_first, const std::string& remove_last);
+
+    /**
+     * 
+     */
+    bool recomendFriend();
 
 
 
@@ -67,16 +87,7 @@ class Network{
      */
     bool addPerson(std::string first_name_, std::string last_name_, std::string school_, std::string field_);
 
-
-    /**
-     * 
-     */
-    bool recomendFriend();
-
-    /**
-     * 
-     */
-    bool removeFriend();
+    bool changePersonName(const std::string& new_first_name, const std::string& new_last_name);
 
 
 };
