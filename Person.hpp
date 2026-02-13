@@ -92,5 +92,14 @@ class Person{
          */
         bool changeLastName(const std::string& last_);
 
+
+
+        /** **/
+        bool friendAdd(Person* friend_);
+
+        bool friendRemove(Person* friend_);
+
+        void friendsList();
+
 };
 #endif

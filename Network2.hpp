@@ -6,17 +6,11 @@
 #ifndef NETWORK2_H
 #define NETWORK2_H
 
-
-struct Entry {
-    Person person;
-    std::unordered_map<std::string, Person*> friends;
-};
-
 class Network{
 
     private:
         int id_;
-        std::unordered_map<std::string ,Entry> network_;
+        std::unordered_map<std::string ,Person*> network_;
         std::unordered_map<std::string, std::string> duplicate_;
         Person* current_person_;
         Person* person_;
@@ -73,7 +67,7 @@ class Network{
      * @param const reference to a string of the person first name we want to remove
      * @param const reference to a string of the person last name we want to remove
      */
-    void removeFriend(const std::string& remove_first, const std::string& remove_last);
+    bool removeFriend(const std::string& remove_first, const std::string& remove_last);
 
     /**
      * 
@@ -89,7 +83,7 @@ class Network{
      * 
      */
     bool addPerson(std::string first_name_, std::string last_name_, std::string school_, std::string field_);
-
+    bool removePerson();
     bool changePersonName(const std::string& new_first_name, const std::string& new_last_name);
 
 

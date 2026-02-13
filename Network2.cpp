@@ -4,39 +4,71 @@
 Person* Network::lookUp(const std::string& first_name_, const std::string& last_name_){
     auto look_up_ = network_.find(first_name_ + " " + last_name_);
 
+    //if person not in network then we set to nullptr
     if(look_up_  == network_.end()){
         return nullptr;
     }
-    return &(look_up_->second.person);
+    //if they are we return the actual person
+    return look_up_->second;
  }
 
 
- void Network::setCurrentPerson(const std::string& first_name_,const std::string& last_name_){
-    //creates a temp person
-    auto person = lookUp(first_name_, last_name_);
+ bool Network::setCurrentPerson(const std::string& first_name_,const std::string& last_name_){
+    person_ = lookUp(first_name_, last_name_);
 
     //checks if there person even exist in our network
-    if(person == nullptr){
-        std::cout << "This person does not exist in out network." << std::endl;
-        return;
+    if(person_ == nullptr){
+        std::cout << "This person does not exist in our network." << std::endl;
+        return 0;
     }
     //if they do they we set it to the current person that we want to minipluate
-    current_person_ = person;
+    current_person_ = person_;
+    return 1;
 }
 
+/** FRIENDS SECTION **/
 
 bool Network::addFriend(const std::string& friend_first_name, const std::string& friend_last_name_){
-    auto it = lookUp(*current_person_);
-
-    Person* temp_friend;
-    temp_friend->setFirstName(friend_first_name);
-    temp_friend->setLastName(friend_last_name_);
+    friend_ = lookUp(friend_first_name, friend_last_name_);
 
     //makes sure the person exist that we will be adding
-    if(lookUp(*temp_friend) != nullptr && it != nullptr){
-        //added the friend to the current person friends list
-        it.
+    if(friend_ != nullptr && current_person_->friendAdd(friend_)){
         return 1;
     }
     return 0;
+}
+
+bool Network::removeFriend(const std::string& remove_first, const std::string& remove_last){
+    friend_ = lookUp(remove_first, remove_last);
+
+    if(friend_ != nullptr && current_person_->friendRemove(friend_)){
+        return 1;    
+    }
+    return 0;
+}
+
+void Network::listFriends(){
+    current_person_->friendsList();
+    
+}
+
+/** PERSON **/
+
+bool Network::addPerson(std::string first_name_, std::string last_name_, 
+std::string school_, std::string field_){
+
+        Person* new_person = new Person (first_name_,last_name_,school_,field_, {});
+        network_.insert({new_person->getFullName(), new_person});
+        return 1;
+}
+
+bool Network::removePerson(){
+    network_.erase(current_person_->getFullName());
+    return 1;
+}
+
+bool Network::changePersonName(const std::string& new_first_name, const std::string& new_last_name){
+    current_person_->changeFirstName(new_first_name);
+    current_person_->changeLastName(new_last_name);
+    return 1;
 }
