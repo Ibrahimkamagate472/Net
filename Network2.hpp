@@ -11,7 +11,7 @@ class Network{
     private:
         int id_;
         std::unordered_map<std::string ,Person*> network_;
-        std::unordered_map<std::string, std::string> duplicate_;
+        std::unordered_map<std::string, std::string>dplicate_;
         Person* current_person_;
         Person* person_;
         Person* friend_;

@@ -98,3 +98,53 @@ bool Person::changeFirstName(const std::string& first_){
 bool Person::changeLastName(const std::string& last_){
     last_name_ = last_;
 }
+
+
+/** FRIEND SECTION **/
+
+
+bool Person::friendAdd(Person* friend_search_){
+    //checks if they have anyfriends
+    if(friends_.empty()){
+        return 0 ;
+    }
+    auto person_ = friends_.find(friend_search_->getFirstName());
+
+    if(person_ == friends_.end()){
+        friends_.insert(friend_search_->getFullName(), friend_search_->getFullName());
+    }
+}
+
+bool Person::friendRemove(Person* friend_search_){
+    //checks if they have any firends
+    if(friends_.empty()){
+        return 0;
+    }
+    //finds the person
+    auto person_ = friends_.find(friend_search_->getFullName());
+
+    if(person_ != friends_.end()){
+        friends_.erase(person_);
+        return 1;
+    }
+    return 0;
+}
+
+void Person::friendsList(){
+    //checks if the have any friends 
+    if(friends_.empty()){
+        return;
+    }
+
+    std::vector<std::string> names_;
+    //loops through all the friends and add to a vector 
+    for(const auto& person_: friends_){
+        names_.push_back(person_.first);
+    }
+    //sort the names and cout 
+    std::sort(names_.begin(), names_.end());
+
+    for(const auto& person_ : names_){
+        std::cout << person_ << std::endl;
+    }
+}
