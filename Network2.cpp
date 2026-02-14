@@ -72,3 +72,14 @@ bool Network::changePersonName(const std::string& new_first_name, const std::str
     current_person_->changeLastName(new_last_name);
     return 1;
 }
+
+
+bool Network::duplicate(Person* duplicate_friend_){
+    auto dup_finder_ = duplicate_table_.find(duplicate_friend_->getFullName());
+
+    if(dup_finder_ != duplicate_table_.end()){
+        duplicate_table_[dup_finder_->first] ++;
+        return 1;
+    }
+    return 0;
+}

@@ -11,7 +11,7 @@ class Network{
     private:
         int id_;
         std::unordered_map<std::string ,Person*> network_;
-        std::unordered_map<std::string, std::string>dplicate_;
+        std::unordered_map<std::string, int> duplicate_table_;
         Person* current_person_;
         Person* person_;
         Person* friend_;
@@ -39,7 +39,7 @@ class Network{
     /**
      * @brief this functions handles if there are duplicate 
      */
-    bool duplicate(const std::string& indicator_);
+    bool duplicate(Person* duplicate_friend_);
 
     void duplicateHandler(const std::string& duplicateName);
 
