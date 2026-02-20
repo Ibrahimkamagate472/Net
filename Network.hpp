@@ -6,20 +6,19 @@
 #ifndef NETWORK_H
 #define NETWORK_H
 
-struct Entry{
-    Person person;
-    std::unordered_map<std::string, std::string> friends;
-};
-
 class Network{
 
     private:
         int id_;
-        std::unordered_map<std::string ,Entry> network_;
-        std::unordered_map<std::string, std::string> duplicate_;
-        std::string current_person_;
+        std::unordered_map<std::string ,Person*> network_;
+        std::unordered_map<std::string, int> duplicate_table_;
+        Person* current_person_;
+        Person* person_;
+        Person* friend_;
+
 
     public:
+
     /**
      * @brief this function checks in our network if a person is in it or not
      * 
@@ -28,8 +27,7 @@ class Network{
      * 
      * @return true or false if we were able find the person or not
      */
-    Person* lookUp(Person& person_);
-
+    Person* lookUp(const std::string& first_name_, const std::string& last_name_);
     /**
      * @brief this function sets the currernt person we are using, if the exist 
      * 
@@ -37,12 +35,13 @@ class Network{
      * @param const reference to a string of the persons last name 
      * 
      */
-    void setCurrentPerson(const std::string& first_name_, const std::string& last_name_);
+    bool setCurrentPerson(const std::string& first_name_, const std::string& last_name_);
 
     /**
      * @brief this functions handles if there are duplicate 
      */
-    bool duplicate(const std::string& indicator_);
+    void addDuplicate(Person* duplicate_person_);
+    bool removeDuplicate();
 
     void duplicateHandler(const std::string& duplicateName);
 
@@ -70,7 +69,7 @@ class Network{
      * @param const reference to a string of the person first name we want to remove
      * @param const reference to a string of the person last name we want to remove
      */
-    void removeFriend(const std::string& remove_first, const std::string& remove_last);
+    bool removeFriend(const std::string& remove_first, const std::string& remove_last);
 
     /**
      * 
@@ -86,7 +85,7 @@ class Network{
      * 
      */
     bool addPerson(std::string first_name_, std::string last_name_, std::string school_, std::string field_);
-
+    bool removePerson();
     bool changePersonName(const std::string& new_first_name, const std::string& new_last_name);
 
 

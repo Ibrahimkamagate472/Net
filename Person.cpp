@@ -111,7 +111,7 @@ bool Person::friendAdd(Person* friend_search_){
     auto person_ = friends_.find(friend_search_->getFirstName());
 
     if(person_ == friends_.end()){
-        friends_.insert(friend_search_->getFullName(), friend_search_->getFullName());
+       // friends_.insert(friend_search_->getFullName(), friend_search_->getFullName());
     }
 }
 

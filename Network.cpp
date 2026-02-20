@@ -1,175 +1,142 @@
-// #include "Network.hpp"
+#include "Network.hpp"
+
+/** BASIC FUNCTIONS **/
+
+/**
+ * @brief this functions looks through our network for a perso
+ * 
+ * @param const reference to a string of the first name 
+ * @param const reference to a string of the last name 
+ * 
+ * @return a pointer to the person
+ */
+Person* Network::lookUp(const std::string& first_name_, const std::string& last_name_){
+    auto look_up_ = network_.find(first_name_ + " " + last_name_);
+
+    //if person not in network then we set to nullptr
+    if(look_up_  == network_.end()){
+        return nullptr;
+    }
+    //if they are we return the actual person
+    return look_up_->second;
+ }
+
+/**
+ * @brief this function sets the currerent person
+ * 
+ * @param const reference to a string of the first name 
+ * @param const reference to a string of the last nmae
+ * 
+ * @return true or flase if done
+ */
+ bool Network::setCurrentPerson(const std::string& first_name_,const std::string& last_name_){
+    person_ = lookUp(first_name_, last_name_);
+
+    //checks if there person even exist in our network
+    if(person_ == nullptr){
+        std::cout << "This person does not exist in our network." << std::endl;
+        return 0;
+    }
+    //if they do they we set it to the current person that we want to minipluate
+    current_person_ = person_;
+    return 1;
+}
 
 
-// /**
-//  * @brief this function checks in our network if a person is in it or not
-//  * 
-//  * @param const reference to a string of the persons first name 
-//  * @param const reference to a string of the persons last name 
-//  * 
-//  * @return true or false if we were able find the person or not
-//  */
+/** PERSON **/
 
-//  Person* Network::lookUp(Person& person_){
-//     auto look_up_ = network_.find(person_.getFullName());
-
-//     if(look_up_  == network_.end()){
-//         return nullptr;
-//     }
-//     return &(look_up_->second.person);
-//  }
-// // bool Network::lookUp(const std::string& first_name_, const std::string& last_name_){
-// //     auto look_up_ = network_.find(first_name_ + " " + last_name_);
-
-// //     //checks to see if the person is in the network
-// //     if(look_up_ ==  network_.end()){
-// //         std::cout << "We are unable to find that person." << std::endl;
-// //         return 0;
-// //     }
-// //     return 1;
-// // }
-
-
-// /**
-//  * @brief this function sets the currernt person we are using, if the exist 
-//  * 
-//  * @param const reference to a string of the persons first name 
-//  * @param const reference to a string of the persons last name 
-//  * 
-//  */
-// void Network::setCurrentPerson(const std::string& first_name_,const std::string& last_name_){
-//     Person* temp;
-//     //checks if there person even exist in our network
-//     if(!lookUp(*temp)){
-//         std::cout << "This person does not exist in out network." << std::endl;
-//         return;
-//     }
-//     //if they do they we set it to the current person that we want to minipluate
-//     current_person_ = first_name_ + " " + last_name_;
-//     delete temp;
-// }
-
-
-
-// /**
-//  * @brief this functions handles if there are duplicate 
-//  */
-// bool Network::duplicate(const std::string& indicator_){
-//     auto person_ = network_.find(current_person_);
-
-//     //means that will be a duplicate name 
-//     if(person_ != network_.end() && indicator_ == "person"){
-
-//     }
-//     else if(person_ != network_.end() && indicator_ == "friend"){
-
-//     }
-// }
-
-
-
-// void Network::duplicateHandler(const std::string& duplicateName){
-//     for(auto person_ : network_){
-//         if(person_.second.person.getFirstName() == duplicateName){
-
-//         }
-//     }
-// }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-// /* FRIENDS SECTION */
-
-// /**
-//  * @brief this functions adds a friend to the current preson that we are using 
-//  * 
-//  * @param const reference to a string of the friend we are adding first name
-//  * @param const reference to a string of the friend we are adding last name
-//  * 
-//  * @return true or false if we were able to add the friend
-//  */
-// bool Network::addFriend(const std::string& friend_first_name, const std::string& friend_last_name_){
-//     auto it = network_.find(current_person_);
-
-//     //makes sure the person exist that we will be adding
-//     if(lookUp(friend_first_name, friend_last_name_)){
-//         //added the friend to the current person friends list
-//         it->second.friends.insert(friend_first_name + " "+ friend_last_name_, 
-//             friend_first_name + " "+ friend_last_name_);
-//         return 1;
-//     }
-//     return 0;
-// }
-
-// /**
-//  * @brief this function list out all the friends for a current person
-//  */
-// void Network::listFriends(){
-//     auto person_ = network_.find(current_person_);
-
-//     if(person_ != network_.end()){
-//         for(const auto friend_ : person_->second.friends){
-//             std::cout << friend_.first;
-//         }
-//     }
-// }
-
-// /**
-//  * @brief this function deletes a friend from a persons list 
-//  * 
-//  * @param const reference to a string of the person first name we want to remove
-//  * @param const reference to a string of the person last name we want to remove
-//  */
-// void Network::removeFriend(const std::string& remove_first, const std::string& remove_last){
-//     auto person_ = network_.find(current_person_);
-//     //finds the friends 
-//     std::string remove_full_name = remove_first + " " + remove_last;
-//     auto friend_ = person_->second.friends.find(remove_full_name);
+/**
+ * @brief this function adds a person to the network
+ * 
+ * @param const reference to a string of the first name
+ * @param const reference to a string of the last name
+ * @param const reference to a string of the school
+ * @param const reference to a string of the field
+ * 
+ * @return true or false 
+ */
+bool Network::addPerson(std::string first_name_, std::string last_name_, 
+    std::string school_, std::string field_){
     
-//     //double check if they are in the friends list
-//     if(friend_ != person_->second.friends.end()){
-//         person_->second.friends.erase(remove_first);
-//         std::cout << "We have removed " << remove_full_name << " from " 
-//         << current_person_ << " friends list." << std::endl;
-//     }
-// }
+            Person* new_person = new Person (first_name_,last_name_,school_,field_, {});
+            network_.insert({new_person->getFullName(), new_person});
+            return 1;
+    }
 
-// /* BASIC FUNCTIONS */
+/**
+ * @brief this function removes a person from the network 
+ * 
+ * @return true or false 
+ */
+bool Network::removePerson(){
+    network_.erase(current_person_->getFullName());
+    return 1;
+}
 
-// /**
-//  * @brief functions adds a new people to out network
-//  * 
-//  */
-// bool Network::addPerson(std::string first_name_, std::string last_name_, std::string school_, std::string field_){
+bool Network::changePersonName(const std::string& new_first_name, const std::string& new_last_name){
+    current_person_->changeFirstName(new_first_name);
+    current_person_->changeLastName(new_last_name);
+    return 1;
+}
+
+/** FRIENDS SECTION **/
+
+/**
+ * @brief this function add a friend to the current person that we are on
+ * 
+ * @param const reference to a string of the friends first name 
+ * @param const reference to a string of the friends last name
+ * 
+ * @return true or false if done 
+ */
+bool Network::addFriend(const std::string& friend_first_name, const std::string& friend_last_name_){
+    friend_ = lookUp(friend_first_name, friend_last_name_);
+
+    //makes sure the person exist that we will be adding
+    if(friend_ != nullptr && current_person_->friendAdd(friend_)){
+        return 1;
+    }
+    return 0;
+}
+
+/**
+ * @brief this function removes a friend from the current person that we are on 
+ * 
+ * @param const reference to a string of the friends first name that we want to remove
+ * @param const reference to a string of the friends last name that we want to remove
+ * 
+ * @return true or false if done
+ */
+bool Network::removeFriend(const std::string& remove_first, const std::string& remove_last){
+    friend_ = lookUp(remove_first, remove_last);
+
+    if(friend_ != nullptr && current_person_->friendRemove(friend_)){
+        return 1;    
+    }
+    return 0;
+}
+/**
+ * @brief this function list all the friends of the current person
+ */
+void Network::listFriends(){
+    current_person_->friendsList();
     
-//     Person temp_person_ (first_name_, last_name_, school_, field_, {});
+}
 
-//     Entry person_;
-//     person_.friends = {};
-//     person_.person = temp_person_;
-//     network_.insert({first_name_ + " " +last_name_, person_});
+/** DUPLICATE HANDLER SECTION **/
+/**
+ * @brief this function adds a duplicate person to the network
+ * 
+ * 
+ */
+void Network::addDuplicate(Person* duplicate_person_){
+    //find the person in the dup table
+    auto person_ = duplicate_table_.find(duplicate_person_->getFullName());
 
-//     return 1;
-// }
-
-
-
-
-
-// bool Network::changePersonName(const std::string& new_first_name, const std::string& new_last_name){
-    
-// }
+    //this is the first duplicate for that name
+    if(person_ == duplicate_table_.end()){
+        duplicate_table_[duplicate_person_->getFullName()] = 2;
+    }
+    //if there is more than one person for that name then we increase the total by 1
+    duplicate_table_[duplicate_person_->getFullName()] ++;
+}
